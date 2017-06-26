@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zavu : MonoBehaviour {
+public class Item : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -20,9 +20,17 @@ public class Zavu : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if(LayerMask.LayerToName(collision.gameObject.layer) == "PlayerToItem")
+		var layerName = LayerMask.LayerToName(collision.gameObject.layer);
+		if(layerName == "PlayerToItem")
 		{
 			Destroy(gameObject);
+		}
+		else if(layerName == "WallForItem")
+		{
+			var rigidbody = GetComponent<Rigidbody2D>();
+			Vector2 velocity = rigidbody.velocity;
+			velocity.y = -velocity.y;
+			rigidbody.velocity = velocity;
 		}
 	}
 }
