@@ -9,14 +9,23 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private GameObject bomb;
 	[SerializeField]
+	private GameObject canvas;
+	[SerializeField]
+	private GameObject scoreZavu;
+	[SerializeField]
 	private float scrollSpeed;
 	[SerializeField]
 	private float zavuCountMax;
+
+	private int currentScore = 0;
 
 	// Use this for initialization
 	void Start () {
 		StartCoroutine("EmitZavu");
 		StartCoroutine("EmitBomb");
+		AddScore(10);
+		ResetScore();
+		AddScore(10);
 	}
 
 	// Update is called once per frame
@@ -58,5 +67,29 @@ public class GameController : MonoBehaviour {
 
 		item.GetComponent<Transform>().position = new Vector2(startX, Random.Range(bottomY, topY));
 		item.GetComponent<Rigidbody2D>().AddForce(new Vector2(scrollSpeed, Random.Range(-forceRangeY, forceRangeY)), ForceMode2D.Impulse);
+	}
+
+	private void AddScore(int score)
+	{
+		for(int i = 0; i < score; i++)
+		{
+			var newScoreZavu = Instantiate(scoreZavu);
+			var rectTransform = newScoreZavu.GetComponent<RectTransform>();
+			rectTransform.SetParent(canvas.transform, false);
+			Vector2 position = rectTransform.anchoredPosition;
+			position.y -= currentScore * 2;
+			rectTransform.anchoredPosition = position;
+			++currentScore;
+		}
+	}
+
+	private void ResetScore()
+	{
+		var scoreZavus = GameObject.FindGameObjectsWithTag("ScoreZavu");
+		foreach(var obj in scoreZavus)
+		{
+			Destroy(obj);
+		}
+		currentScore = 0;
 	}
 }
