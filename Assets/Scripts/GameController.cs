@@ -23,9 +23,6 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		StartCoroutine("EmitZavu");
 		StartCoroutine("EmitBomb");
-		AddScore(10);
-		ResetScore();
-		AddScore(10);
 	}
 
 	// Update is called once per frame
@@ -42,6 +39,7 @@ public class GameController : MonoBehaviour {
 			{
 				var newZavu = Instantiate(zavu);
 				InitializeItem(newZavu, 1);
+				newZavu.GetComponent<Item>().CollidedWithPlayer += () => { AddScore(1); };
 			}
 			yield return new WaitForSeconds(0.5f);
 		}
@@ -53,6 +51,7 @@ public class GameController : MonoBehaviour {
 		{
 			var newBomb = Instantiate(bomb);
 			InitializeItem(newBomb, 5);
+			newBomb.GetComponent<Item>().CollidedWithPlayer += ResetScore;
 			yield return new WaitForSeconds(Random.Range(0.5f, 1f));
 		}
 	}

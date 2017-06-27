@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
+	public event System.Action CollidedWithPlayer = delegate { };
+
 	// Use this for initialization
 	void Start () {
 		
@@ -23,6 +25,7 @@ public class Item : MonoBehaviour {
 		var layerName = LayerMask.LayerToName(collision.gameObject.layer);
 		if(layerName == "PlayerToItem")
 		{
+			CollidedWithPlayer();
 			Destroy(gameObject);
 		}
 		else if(layerName == "WallForItem")
