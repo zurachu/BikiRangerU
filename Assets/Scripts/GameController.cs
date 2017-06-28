@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
 	[SerializeField]
+	private UnityEngine.UI.Text tapToStart;
+	[SerializeField]
+	private GameObject player;
+	[SerializeField]
 	private GameObject zavu;
 	[SerializeField]
 	private GameObject bomb;
@@ -21,13 +25,22 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine("EmitZavu");
-		StartCoroutine("EmitBomb");
 	}
 
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void StartGame()
+	{
+		if(tapToStart.enabled)
+		{
+			tapToStart.enabled = false;
+			player.GetComponent<Rigidbody2D>().constraints &= ~(RigidbodyConstraints2D.FreezePosition);
+			StartCoroutine("EmitZavu");
+			StartCoroutine("EmitBomb");
+		}
 	}
 
 	private IEnumerator EmitZavu()

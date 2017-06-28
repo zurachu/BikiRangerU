@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 41ba6d3ecb9c8de41b75b49e51fbde75
+timeCreated: 1498630686
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Sam's Town
+  fontNames:
+  - Sam's Town
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
