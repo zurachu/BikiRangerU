@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TimeCount : MonoBehaviour {
 
+	public event System.Action TimeOver = delegate { };
+
 	[SerializeField]
 	private float initialTime;
 	[SerializeField]
@@ -21,11 +23,20 @@ public class TimeCount : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(restTime > 0)
+		if(HasRestTime())
 		{
 			restTime -= Time.deltaTime;
 			UpdateText();
+			if(!HasRestTime())
+			{
+				TimeOver();
+			}
 		}
+	}
+
+	public bool HasRestTime()
+	{
+		return restTime > 0;
 	}
 
 	private void UpdateText()

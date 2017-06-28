@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private UnityEngine.UI.Text tapToStart;
 	[SerializeField]
-	private GameObject time;
+	private TimeCount timeCount;
 
 	[SerializeField]
 	private GameObject player;
@@ -40,19 +40,36 @@ public class GameController : MonoBehaviour {
 		if(tapToStart.enabled)
 		{
 			tapToStart.enabled = false;
-			time.SetActive(true);
+			timeCount.transform.parent.gameObject.SetActive(true);
+			timeCount.TimeOver += EndGame;
 			player.GetComponent<Rigidbody2D>().constraints &= ~(RigidbodyConstraints2D.FreezePosition);
 			StartCoroutine("EmitZavu");
 			StartCoroutine("EmitBomb");
 		}
 	}
 
+	private void EndGame()
+	{
+		var rigitBodies = GameObject.FindObjectsOfType<Rigidbody2D>();
+		foreach (var rigidBody in rigitBodies)
+		{
+			rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+		}
+		var animators = GameObject.FindObjectsOfType<Animator>();
+		foreach (var animator in animators)
+		{
+			animator.speed = 0;
+		}
+		StopCoroutine("EmitZavu");
+		StopCoroutine("EmitBomb");
+	}
+
 	private IEnumerator EmitZavu()
 	{
-		while (true)
+		while(true)
 		{
 			int zavuCount = GameObject.FindGameObjectsWithTag("Zavu").Length;
-			if (zavuCount < zavuCountMax)
+			if(zavuCount < zavuCountMax)
 			{
 				var newZavu = Instantiate(zavu);
 				InitializeItem(newZavu, 1);
@@ -64,7 +81,7 @@ public class GameController : MonoBehaviour {
 
 	private IEnumerator EmitBomb()
 	{
-		while (true)
+		while(true)
 		{
 			var newBomb = Instantiate(bomb);
 			InitializeItem(newBomb, 5);
