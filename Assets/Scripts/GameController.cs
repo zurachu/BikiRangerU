@@ -89,7 +89,7 @@ public class GameController : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(Random.Range(5, 25));
 		var newZavu = Instantiate(ginZavu);
-		InitializeItem(newZavu, 1, 2);
+		InitializeItem(newZavu, 1, 2.5f);
 		newZavu.GetComponent<Item>().CollidedWithPlayer += () => { AddScore(10); };
 	}
 
@@ -104,7 +104,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private void InitializeItem(GameObject item, float forceRangeY, float speedRatio = 1)
+	private void InitializeItem(GameObject item, float forceRangeY, float forceX = 0)
 	{
 		Vector2 leftTop = Camera.main.ViewportToWorldPoint(new Vector2(0, 1));
 		Vector2 rightBottom = Camera.main.ViewportToWorldPoint(new Vector2(1, 0));
@@ -113,7 +113,7 @@ public class GameController : MonoBehaviour {
 		float bottomY = rightBottom.y + 1;
 
 		item.GetComponent<Transform>().position = new Vector2(startX, Random.Range(bottomY, topY));
-		item.GetComponent<Rigidbody2D>().AddForce(new Vector2(scrollSpeed * speedRatio, Random.Range(-forceRangeY, forceRangeY)), ForceMode2D.Impulse);
+		item.GetComponent<Rigidbody2D>().AddForce(new Vector2(scrollSpeed + forceX, Random.Range(-forceRangeY, forceRangeY)), ForceMode2D.Impulse);
 	}
 
 	private void AddScore(int score)
