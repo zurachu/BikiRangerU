@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private UnityEngine.UI.Text tapToStart;
 	[SerializeField]
+	private GameObject time;
+
+	[SerializeField]
 	private GameObject player;
 	[SerializeField]
 	private GameObject zavu;
@@ -37,6 +40,7 @@ public class GameController : MonoBehaviour {
 		if(tapToStart.enabled)
 		{
 			tapToStart.enabled = false;
+			time.SetActive(true);
 			player.GetComponent<Rigidbody2D>().constraints &= ~(RigidbodyConstraints2D.FreezePosition);
 			StartCoroutine("EmitZavu");
 			StartCoroutine("EmitBomb");
