@@ -5,9 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
 	[SerializeField]
-	private float upSpeed;
-	[SerializeField]
-	private float sideSpeed;
+	private float speed;
+
+	private Vector3 previousMousePosition;
 
 	// Use this for initialization
 	void Start () {
@@ -16,13 +16,15 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float x = Input.GetAxisRaw("Horizontal");
-		float y = Input.GetAxisRaw("Vertical");
-		if(y < 0)
+		if(Input.GetMouseButtonDown(0))
 		{
-			y = 0;
+			previousMousePosition = Input.mousePosition;
 		}
-		var force = new Vector2(x * sideSpeed, y * upSpeed);
-		GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+		else if(Input.GetMouseButton(0))
+		{
+			Vector2 direction = (Input.mousePosition - previousMousePosition).normalized;
+			GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
+			previousMousePosition = Input.mousePosition;
+		}
 	}
 }
