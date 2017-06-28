@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour {
 	private UnityEngine.UI.Text timeUp;
 
 	[SerializeField]
+	private UnityEngine.UI.Text score;
+
+	[SerializeField]
 	private GameObject player;
 	[SerializeField]
 	private GameObject zavu;
@@ -68,6 +71,7 @@ public class GameController : MonoBehaviour {
 		}
 		StopCoroutine("EmitZavu");
 		StopCoroutine("EmitBomb");
+		Invoke("StartRestartDialog", 2);
 	}
 
 	private IEnumerator EmitZavu()
@@ -138,5 +142,21 @@ public class GameController : MonoBehaviour {
 			Destroy(obj);
 		}
 		currentScore = 0;
+	}
+
+	private void StartRestartDialog()
+	{
+		score.transform.parent.gameObject.SetActive(true);
+		score.text += currentScore.ToString();
+	}
+
+	public void Restart()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }
