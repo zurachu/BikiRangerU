@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour {
 	private UnityEngine.UI.Text tapToStart;
 	[SerializeField]
 	private TimeCount timeCount;
+	[SerializeField]
+	private UnityEngine.UI.Text timeUp;
 
 	[SerializeField]
 	private GameObject player;
@@ -53,6 +55,7 @@ public class GameController : MonoBehaviour {
 
 	private void EndGame()
 	{
+		timeUp.enabled = true;
 		var rigitBodies = GameObject.FindObjectsOfType<Rigidbody2D>();
 		foreach (var rigidBody in rigitBodies)
 		{
@@ -71,6 +74,7 @@ public class GameController : MonoBehaviour {
 	{
 		while (true)
 		{
+			yield return new WaitForSeconds(0.5f);
 			int zavuCount = GameObject.FindGameObjectsWithTag("Zavu").Length;
 			if (zavuCount < zavuCountMax)
 			{
@@ -78,7 +82,6 @@ public class GameController : MonoBehaviour {
 				InitializeItem(newZavu, 1);
 				newZavu.GetComponent<Item>().CollidedWithPlayer += () => { AddScore(1); };
 			}
-			yield return new WaitForSeconds(0.5f);
 		}
 	}
 
@@ -94,10 +97,10 @@ public class GameController : MonoBehaviour {
 	{
 		while(true)
 		{
+			yield return new WaitForSeconds(Random.Range(0.5f, 1f));
 			var newBomb = Instantiate(bomb);
 			InitializeItem(newBomb, 5);
 			newBomb.GetComponent<Item>().CollidedWithPlayer += ResetScore;
-			yield return new WaitForSeconds(Random.Range(0.5f, 1f));
 		}
 	}
 
