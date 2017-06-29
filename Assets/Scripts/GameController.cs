@@ -108,6 +108,12 @@ public class GameController : MonoBehaviour {
 			var newBomb = Instantiate(bomb);
 			InitializeItem(newBomb, 5);
 			newBomb.GetComponent<Item>().CollidedWithPlayer += ResetScore;
+			newBomb.GetComponent<Item>().CollidedWithPlayer += () => {
+				if(SystemInfo.supportsVibration)
+				{
+					Handheld.Vibrate();
+				}
+			};
 		}
 	}
 
