@@ -5,7 +5,13 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
 	[SerializeField]
-	private UnityEngine.UI.Text tapToStart;
+	private GameObject beforeStartCanvas;
+	[SerializeField]
+	private UnityEngine.UI.Toggle vibrate;
+
+	[SerializeField]
+	private GameObject inGameCanvas;
+
 	[SerializeField]
 	private TimeCount timeCount;
 	[SerializeField]
@@ -22,8 +28,6 @@ public class GameController : MonoBehaviour {
 	private GameObject ginZavu;
 	[SerializeField]
 	private GameObject bomb;
-	[SerializeField]
-	private GameObject canvas;
 	[SerializeField]
 	private GameObject scoreZavu;
 	[SerializeField]
@@ -47,10 +51,10 @@ public class GameController : MonoBehaviour {
 
 	public void StartGame()
 	{
-		if(tapToStart.enabled)
+		if(beforeStartCanvas.activeSelf)
 		{
-			tapToStart.enabled = false;
-			timeCount.transform.parent.gameObject.SetActive(true);
+			beforeStartCanvas.SetActive(false);
+			inGameCanvas.SetActive(true);
 			timeCount.TimeOver += EndGame;
 			player.GetComponent<Rigidbody2D>().constraints &= ~(RigidbodyConstraints2D.FreezePosition);
 			StartCoroutine("EmitZavu");
@@ -109,7 +113,7 @@ public class GameController : MonoBehaviour {
 			InitializeItem(newBomb, 5);
 			newBomb.GetComponent<Item>().CollidedWithPlayer += ResetScore;
 			newBomb.GetComponent<Item>().CollidedWithPlayer += () => {
-				if(SystemInfo.supportsVibration)
+				if(SystemInfo.supportsVibration && vibrate.isOn)
 				{
 					Handheld.Vibrate();
 				}
@@ -135,7 +139,7 @@ public class GameController : MonoBehaviour {
 		{
 			var newScoreZavu = Instantiate(scoreZavu);
 			var rectTransform = newScoreZavu.GetComponent<RectTransform>();
-			rectTransform.SetParent(canvas.transform, false);
+			rectTransform.SetParent(inGameCanvas.transform, false);
 			Vector2 position = rectTransform.anchoredPosition;
 			position.y -= currentScore * 2;
 			rectTransform.anchoredPosition = position;
