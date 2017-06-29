@@ -45,7 +45,14 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if(Application.platform == RuntimePlatform.Android && Input.GetKey(KeyCode.Escape))
 		{
-			Application.Quit();
+			if(beforeStartCanvas.activeSelf)
+			{
+				Application.Quit();
+			}
+			else
+			{
+				Restart();
+			}
 		}
 	}
 
