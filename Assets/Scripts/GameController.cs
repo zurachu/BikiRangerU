@@ -175,6 +175,11 @@ public class GameController : MonoBehaviour {
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 	}
 
+	public void Explanation()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("Explanation");
+	}
+
 	public void Quit()
 	{
 		Application.Quit();
