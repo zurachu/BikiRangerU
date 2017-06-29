@@ -39,6 +39,10 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(NickName.Value() == "")
+		{
+			NameInput();
+		}
 	}
 
 	// Update is called once per frame
@@ -173,6 +177,11 @@ public class GameController : MonoBehaviour {
 	public void Restart()
 	{
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+	}
+
+	public void NameInput()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene("NameInput");
 	}
 
 	public void Explanation()
