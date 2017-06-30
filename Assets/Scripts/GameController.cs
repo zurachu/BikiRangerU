@@ -182,12 +182,22 @@ public class GameController : MonoBehaviour {
 
 	public void NameInput()
 	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("NameInput");
+		ChangeScene("NameInput");
+	}
+
+	public void HighScoreScreen()
+	{
+		ChangeScene("HighScore");
 	}
 
 	public void Explanation()
 	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("Explanation");
+		ChangeScene("Explanation");
+	}
+
+	private void ChangeScene(string name)
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene(name);
 	}
 
 	public void Quit()
