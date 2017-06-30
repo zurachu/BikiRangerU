@@ -90,6 +90,7 @@ public class GameController : MonoBehaviour {
 		StopCoroutine("EmitZavu");
 		StopCoroutine("EmitBomb");
 		Invoke("StartRestartDialog", 2);
+		HighScore.Save(currentScore);
 	}
 
 	private IEnumerator EmitZavu()
