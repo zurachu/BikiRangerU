@@ -39,6 +39,10 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(NickName.Value() == "")
+		{
+			NameInput();
+		}
 	}
 
 	// Update is called once per frame
@@ -86,6 +90,7 @@ public class GameController : MonoBehaviour {
 		StopCoroutine("EmitZavu");
 		StopCoroutine("EmitBomb");
 		Invoke("StartRestartDialog", 2);
+		HighScore.Save(currentScore);
 	}
 
 	private IEnumerator EmitZavu()
@@ -175,9 +180,24 @@ public class GameController : MonoBehaviour {
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 	}
 
+	public void NameInput()
+	{
+		ChangeScene("NameInput");
+	}
+
+	public void HighScoreScreen()
+	{
+		ChangeScene("HighScore");
+	}
+
 	public void Explanation()
 	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("Explanation");
+		ChangeScene("Explanation");
+	}
+
+	private void ChangeScene(string name)
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene(name);
 	}
 
 	public void Quit()
